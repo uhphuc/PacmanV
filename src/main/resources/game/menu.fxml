@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<VBox alignment="CENTER" spacing="20"
+      style="-fx-background-color: linear-gradient(to bottom, #1a237e, #0d47a1);"
+      xmlns="http://javafx.com/javafx/17"
+      xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="org.example.ui.controllers.MenuController">
+
+    <padding>
+        <Insets top="50" right="50" bottom="50" left="50"/>
+    </padding>
+
+    <Label text="HERO INFINITY" textFill="white">
+        <font>
+            <Font name="Arial" size="48"/>
+        </font>
+    </Label>
+
+    <!-- Hiển thị điểm cao -->
+    <Label fx:id="highScoreLabel" text="Điểm cao: 0" textFill="gold" style="-fx-font-size: 18;"/>
+
+    <VBox alignment="CENTER" spacing="15">
+        <Button text="Start"
+                fx:id="startButton"
+                onAction="#handleStartGame"
+                style="-fx-background-color: #4CAF50; -fx-text-fill: white; -fx-font-size: 18; -fx-pref-width: 200;">
+        </Button>
+
+    </VBox>
+
+    <Label text="Sử dụng Arrows để di chuyển | E: Skill E (3s) | Q: Skill Q (10s)"
+           textFill="#BBDEFB" style="-fx-font-size: 14;"/>
+
+    <Label text="Bị quái vật chạm sẽ về vị trí (0,0). 5 lần bị chạm = Game Over"
+           textFill="#FFCDD2" style="-fx-font-size: 12;"/>
+
+</VBox>
