@@ -8,17 +8,20 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.stage.Stage;
 
+import java.io.File;
 import java.io.IOException;
+import java.util.List;
+
+import org.example.data.GameResult;
+
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 public class MenuController {
     @FXML
     private Button startButton;
 
-    @FXML
-    private Button exitButton;
-
-    @FXML
-    private Button continueButton;
+    @FXML 
+    private Button scoreButton;
 
     @FXML
     private Label highScoreLabel;
@@ -26,7 +29,7 @@ public class MenuController {
     @FXML
     private void handleStartGame() {
         try {
-            System.out.println("Đang tải game scene...");
+            System.out.println("Loading game scene...");
 
             FXMLLoader loader = new FXMLLoader(
                     getClass().getResource("/game/game.fxml")
@@ -43,10 +46,61 @@ public class MenuController {
 
         } catch (IOException e) {
             e.printStackTrace();
-            System.err.println("Lỗi khi tải game scene: " + e.getMessage());
+            System.err.println("Error load game scene: " + e.getMessage());
         } catch (Exception e) {
             e.printStackTrace();
-            System.err.println("Lỗi không xác định: " + e.getMessage());
+            System.err.println("Error Unexpected: " + e.getMessage());
+        }
+    }
+    @FXML
+    private void handleShowScores() {
+        try {
+            FXMLLoader loader = new FXMLLoader(
+                    getClass().getResource("/game/score.fxml")
+            );
+            Parent scoreRoot = loader.load();
+
+            Stage stage = (Stage) scoreButton.getScene().getWindow();
+            Scene scoreScene = new Scene(scoreRoot);
+            stage.setScene(scoreScene);
+            stage.setTitle("Hero Infinity - Scores");
+            stage.show();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+            System.err.println("Error loading score scene: " + e.getMessage());
+        }
+    }
+    @FXML
+    public void initialize() {
+        loadHighScore();
+    }
+
+    private void loadHighScore() {
+        try {
+            File file = new File("save/gold_history.json");
+            if (!file.exists()) {
+                highScoreLabel.setText("High Score: 0");
+                return;
+            }
+
+            ObjectMapper mapper = new ObjectMapper();
+            List<GameResult> history = mapper.readValue(
+                    file,
+                    mapper.getTypeFactory()
+                            .constructCollectionType(List.class, GameResult.class)
+            );
+
+            int maxGold = history.stream()
+                    .mapToInt(r -> r.gold)
+                    .max()
+                    .orElse(0);
+
+            highScoreLabel.setText("High Score: " + maxGold);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            highScoreLabel.setText("High Score: ?");
         }
     }
 }

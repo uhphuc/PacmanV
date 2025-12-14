@@ -1,0 +1,49 @@
+/* Thêm hiệu ứng hover cho các button */
+.button:hover {
+    -fx-scale-x: 1.05;
+    -fx-scale-y: 1.05;
+    -fx-effect: dropshadow(gaussian, rgba(255,255,255,0.3), 10, 0.5, 0, 0);
+}
+
+.button:pressed {
+    -fx-scale-x: 0.98;
+    -fx-scale-y: 0.98;
+}
+
+/* Style cho ListView */
+.transparent-list .list-cell {
+    -fx-background-color: transparent;
+    -fx-text-fill: white;
+    -fx-font-size: 16px;
+    -fx-padding: 12px 20px;
+    -fx-border-color: transparent;
+}
+
+.transparent-list .list-cell:filled:selected {
+    -fx-background-color: rgba(255,215,0,0.2);
+    -fx-background-radius: 8;
+}
+
+.transparent-list .list-cell:filled:hover {
+    -fx-background-color: rgba(255,255,255,0.1);
+    -fx-background-radius: 8;
+}
+
+.transparent-list .scroll-bar:vertical {
+    -fx-background-color: transparent;
+}
+
+.transparent-list .scroll-bar:vertical .thumb {
+    -fx-background-color: rgba(255,215,0,0.5);
+    -fx-background-radius: 5;
+}
+
+/* Custom cell cho score items */
+.score-item {
+    -fx-background-color: linear-gradient(to right, rgba(0,0,0,0.2), rgba(0,0,0,0.1));
+    -fx-background-radius: 8;
+    -fx-padding: 15px;
+    -fx-border-color: rgba(255,215,0,0.2);
+    -fx-border-radius: 8;
+    -fx-border-width: 1;
+}

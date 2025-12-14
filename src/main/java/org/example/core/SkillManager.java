@@ -19,19 +19,19 @@ public class SkillManager {
 
     public static void useE(GameState state) {
         if (!state.player.canUseE()) return;
-
+        long now = System.currentTimeMillis();
         state.player.shieldActive = true;
-        state.player.shieldStart = System.currentTimeMillis();
-        state.player.lastE = System.currentTimeMillis();
+        state.player.shieldStart = now;
+        state.player.lastE = now;
 
-        state.effects.add(
-            new SkillEffect(
-                state.player.x,
-                state.player.y,
-                Player.SHIELD_DURATION,
-                EffectType.SHIELD
-            )
+        SkillEffect shield = new SkillEffect(
+            state.player.x,
+            state.player.y,
+            Player.SHIELD_DURATION,
+            EffectType.SHIELD
         );
+        shield.followPlayer = true;
+        state.effects.add(shield);
     }
 
     public static void useLeftClick(GameState state, Consumer<Monster> killFn) {

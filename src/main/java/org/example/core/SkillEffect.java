@@ -5,6 +5,7 @@ public class SkillEffect {
     public long startTime;
     public long duration;
     public EffectType type;
+    public boolean followPlayer = false;
 
     public SkillEffect(int x, int y, long duration, EffectType type) {
         this.x = x;

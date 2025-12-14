@@ -30,6 +30,7 @@
             <Label fx:id="monsterLabel" text="Monsters: 0" textFill="white"/>
             <Label fx:id="qLabel" text="Q: Ready" textFill="white" />
             <Label fx:id="eLabel" text="E: Ready" textFill="white" />
+            <Label fx:id="naLabel" text="N/A: Ready" textFill="white" />
         </VBox>
     </right>
 
