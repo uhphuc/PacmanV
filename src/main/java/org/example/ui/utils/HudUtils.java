@@ -17,7 +17,7 @@ public class HudUtils {
             Label portalLabel
     ) {
         hp.setText("HP: " + state.player.hp);
-        gold.setText("Gold: " + state.player.gold);
+        gold.setText("Score: " + state.player.gold);
         level.setText("Level: " + state.level);
 
         long alive = state.monsters.stream().filter(m -> m.alive).count();

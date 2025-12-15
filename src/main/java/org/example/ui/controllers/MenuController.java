@@ -84,9 +84,7 @@ public class MenuController {
             highScoreLabel.setText("High Score: 0");
             return;
         }
-
         ObjectMapper mapper = new ObjectMapper();
-
         LinkedHashMap<Long, Integer> map = mapper.readValue(
                 file,
                 mapper.getTypeFactory()
@@ -96,7 +94,6 @@ public class MenuController {
                                 Integer.class
                         )
         );
-
         int maxGold = map.values().stream()
                 .mapToInt(Integer::intValue)
                 .max()
