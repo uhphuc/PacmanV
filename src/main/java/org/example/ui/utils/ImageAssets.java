@@ -14,6 +14,11 @@ public class ImageAssets {
     public Image rock;
     public Image background;
     public Image portal;
+    public Image border;
+
+    public Image shield;
+    public Image normal_attack;
+    public Image freeze;
 
     public void load() {
         Image monsterSheet = loadImg("/images/sprites/monster/idle.png");
@@ -24,9 +29,14 @@ public class ImageAssets {
         player  = slice(playerSheet, 12, 32, 32);
         gold    = slice(goldSheet, 7, 16, 16);
 
-        rock = loadImg("/images/sprites/tiles/box.png");
-        background = loadImg("/images/sprites/tiles/grass.png");
+        rock = loadImg("/images/sprites/tiles/blue_planet.png");
+        border = loadImg("/images/sprites/tiles/planets.png");
+        background = loadImg("/images/sprites/tiles/background.png");
         portal = loadImg("/images/sprites/tiles/portal.png");
+
+        shield = loadImg("/images/sprites/skills/shield.png");
+        normal_attack = loadImg("/images/sprites/skills/na.png");
+        freeze = loadImg("/images/sprites/skills/freeze.png");
     }
 
     private Image loadImg(String path) {

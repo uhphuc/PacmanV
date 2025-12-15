@@ -3,5 +3,6 @@ package org.example.core;
 public enum EffectType {
     SLASH,
     EXPLOSION,
-    SHOCK, SHIELD
+    SHOCK, SHIELD,
+    FREEZE
 }

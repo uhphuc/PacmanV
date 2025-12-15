@@ -7,14 +7,20 @@ public class SkillManager {
     private static final int GOLD_PER_MONSTER = 50;
     public static void useQ(GameState state) {
         if (!state.player.canUseQ()) return;
-
-
         for (Monster m : state.monsters) {
             m.lastMoveAt = System.currentTimeMillis() + 3000;
         }
+        state.effects.add(
+            new SkillEffect(
+                state.player.x,
+                state.player.y,
+                3000,
+                EffectType.FREEZE
+            )
+        );
 
         state.player.lastQ = System.currentTimeMillis();
-        System.out.println("❄ Freeze monsters!");
+        System.out.println("Freeze monsters!");
     }
 
     public static void useE(GameState state) {

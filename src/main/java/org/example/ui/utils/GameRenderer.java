@@ -40,6 +40,8 @@ public class GameRenderer {
                             x * tileSize, y * tileSize, tileSize, tileSize);
                     case PORTAL -> gc.drawImage(assets.portal,
                             x * tileSize, y * tileSize, tileSize, tileSize);
+                    case BORDER -> gc.drawImage(assets.border,
+                            x * tileSize, y * tileSize, tileSize, tileSize);
                 }
             }
         }
@@ -102,6 +104,7 @@ public class GameRenderer {
             GameState state,
             int camX,
             int camY,
+            ImageAssets assets,
             int tileSize
     ) {
         long now = System.currentTimeMillis();
@@ -110,16 +113,13 @@ public class GameRenderer {
             double t = (now - e.startTime) / (double) e.duration;
 
             if (e.type == EffectType.SLASH) {
-                gc.setStroke(Color.YELLOW);
-                gc.setLineWidth(4 * (1 - t));
-                gc.strokeArc(
-                        (e.x - camX) * tileSize - 10,
-                        (e.y - camY) * tileSize - 10,
-                        tileSize + 20,
-                        tileSize + 20,
-                        45,
-                        90,
-                        ArcType.OPEN
+                // Draw normal attack effect 3x3 from center
+                gc.drawImage(
+                        assets.normal_attack,
+                        (e.x - camX - 1) * tileSize,
+                        (e.y - camY - 1) * tileSize,
+                        tileSize * 3,
+                        tileSize * 3
                 );
             }
             if (e.type == EffectType.SHIELD) {
@@ -127,14 +127,25 @@ public class GameRenderer {
                     e.x = state.player.x;
                     e.y = state.player.y;
                 }
-                gc.setStroke(Color.CYAN);
-                gc.setLineWidth(4); 
-                gc.strokeOval(
-                        (e.x - camX) * tileSize + 4,
-                        (e.y - camY) * tileSize + 4,
-                        tileSize - 8,
-                        tileSize - 8
+                gc.drawImage(
+                        assets.shield,
+                        (e.x - camX) * tileSize,
+                        (e.y - camY) * tileSize,
+                        tileSize,
+                        tileSize
                 );
+            }
+            if (e.type == EffectType.FREEZE) {
+                // Draw freeze effect covering the whole screen
+                gc.setGlobalAlpha(1.0 - t);
+                gc.drawImage(
+                        assets.freeze,
+                        0,
+                        0,
+                        tileSize * GameState.MAP_VIEW_SIZE,
+                        tileSize * GameState.MAP_VIEW_SIZE
+                );
+                gc.setGlobalAlpha(1.0);
             }
         }
     }

@@ -8,6 +8,7 @@ public class GameState {
     public ArrayList<SkillEffect> effects = new ArrayList<>();
     public Map map;
     public int level = 1;
+    public static final int MAP_VIEW_SIZE = 10;
 
     public boolean portalSpawned = false;
     public int portalX = -1;

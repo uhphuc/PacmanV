@@ -10,20 +10,18 @@ public class MapGenerator {
         Random rand = new Random();
 
         int size = Map.SIZE;
-
-        // 1️⃣ fill empty
         for (int y = 0; y < size; y++) {
             for (int x = 0; x < size; x++) {
                 map.tiles[y][x] = TileType.EMPTY;
             }
         }
 
-        // 2️⃣ border wall (đỡ chạy ra ngoài)
+        
         for (int i = 0; i < size; i++) {
-            map.tiles[0][i] = TileType.WALL;
-            map.tiles[size - 1][i] = TileType.WALL;
-            map.tiles[i][0] = TileType.WALL;
-            map.tiles[i][size - 1] = TileType.WALL;
+            map.tiles[0][i] = TileType.BORDER;
+            map.tiles[size - 1][i] = TileType.BORDER;
+            map.tiles[i][0] = TileType.BORDER;
+            map.tiles[i][size - 1] = TileType.BORDER;
         }
 
         // 3️⃣ wall clusters
@@ -86,6 +84,4 @@ public class MapGenerator {
         floodFill(map, visited, x, y + 1);
         floodFill(map, visited, x, y - 1);
     }
-
-
 }

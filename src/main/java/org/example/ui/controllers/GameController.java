@@ -170,7 +170,7 @@ public class GameController {
 
         GameRenderer.renderMap(gc, state, camX, camY, TILE_SIZE, VIEW_SIZE, assets, goldFrame);
         GameRenderer.renderPlayer(gc, state, camX, camY, TILE_SIZE, assets, playerFrame);
-        GameRenderer.renderEffects(gc, state, camX, camY, TILE_SIZE);
+        GameRenderer.renderEffects(gc, state, camX, camY, assets, TILE_SIZE);
         GameRenderer.renderMonsters(gc, state, camX, camY, TILE_SIZE, VIEW_SIZE, assets, monsterFrame);
     }
     

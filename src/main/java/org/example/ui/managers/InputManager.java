@@ -42,7 +42,7 @@ public class InputManager {
         }
 
         TileType tile = state.map.tiles[ny][nx];
-        if (tile == TileType.WALL) return;
+        if (tile == TileType.WALL || tile == TileType.BORDER) return;
         if (tile == TileType.GOLD){
             state.player.gold++;
             state.map.tiles[ny][nx] = TileType.EMPTY;
