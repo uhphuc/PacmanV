@@ -93,5 +93,4 @@
                textFill="#FFCDD2" 
                style="-fx-font-size: 14; -fx-font-weight: bold;"/>
     </HBox>
-
 </VBox>

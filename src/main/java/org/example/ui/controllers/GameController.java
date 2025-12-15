@@ -12,6 +12,7 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import javafx.scene.control.Label;
+import javafx.scene.control.Button;
 
 import java.io.IOException;
 import java.util.Random;
@@ -20,6 +21,7 @@ import org.example.core.*;
 import org.example.ui.managers.InputManager;
 import org.example.ui.managers.MonsterManager;
 import org.example.ui.utils.*;
+
 
 public class GameController {
 
@@ -32,6 +34,8 @@ public class GameController {
     @FXML private Label qLabel;
     @FXML private Label eLabel;
     @FXML private Label naLabel;
+    @FXML private Label portalLabel;
+    @FXML private Button exitButton;
 
     private AnimationTimer gameLoop;
     private GraphicsContext gc;
@@ -92,17 +96,19 @@ public class GameController {
         state.map.tiles[m.y][m.x] = TileType.EMPTY;
     }
 
+
     private void nextLevel() {
         state.level++;
-        // reset map
+
         state.map = MapGenerator.generate(state.level);
-        // reset player pos
+
         state.player.x = state.map.playerStartX;
         state.player.y = state.map.playerStartY;
-        // spawn quái mới
+        
+        state.player.lastHitAt = 0;
         state.monsters.clear();
         MonsterManager.spawn(state);
-        // reset portal
+
         state.portalSpawned = false;
         state.portalX = -1;
         state.portalY = -1;
@@ -137,7 +143,7 @@ public class GameController {
 
                 Stage stage = (Stage) canvas.getScene().getWindow();
                 stage.setScene(new Scene(root));
-                stage.setTitle("Hero Infinity");
+                stage.setTitle("RoboVerse");
                 stage.show();
             } catch (IOException e) {
                 e.printStackTrace();
@@ -149,7 +155,7 @@ public class GameController {
         MonsterManager.update(state, this::gameOver);
         updateIdleAnimation();
         checkPortal();
-        HudUtils.update(state, hpLabel, goldLabel, levelLabel, monsterLabel, qLabel, eLabel, naLabel);
+        HudUtils.update(state, hpLabel, goldLabel, levelLabel, monsterLabel, qLabel, eLabel, naLabel, portalLabel);
         state.effects.removeIf(e -> !e.isAlive());
     }
 
@@ -195,7 +201,28 @@ public class GameController {
         state.portalX = x;
         state.portalY = y;
         state.portalSpawned = true;
-
-        System.out.println("🚪 Portal spawned at " + x + "," + y);
     }
+    @FXML
+    private void onExit() {
+        SaveUtils.saveGold(state.player.gold);
+
+        if (gameLoop != null) {
+            gameLoop.stop();
+        }
+
+        try {
+            FXMLLoader loader = new FXMLLoader(
+                getClass().getResource("/game/menu.fxml")
+            );
+            Parent root = loader.load();
+
+            Stage stage = (Stage) canvas.getScene().getWindow();
+            stage.setScene(new Scene(root));
+            stage.setTitle("Hero Infinity");
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
 }

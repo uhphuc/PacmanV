@@ -6,6 +6,7 @@ import org.example.data.GameResult;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
 
 public class SaveUtils {
@@ -13,7 +14,8 @@ public class SaveUtils {
     private static final String FILE = "save/gold_history.json";
 
     public static void saveGold(int gold) {
-        if (gold <= 0) return; // No need to save zero gold
+        if (gold <= 0) return;
+
         try {
             ObjectMapper mapper = new ObjectMapper();
             mapper.enable(SerializationFeature.INDENT_OUTPUT);
@@ -21,20 +23,24 @@ public class SaveUtils {
             File file = new File(FILE);
             file.getParentFile().mkdirs();
 
-            List<GameResult> history;
+            LinkedHashMap<Long, Integer> map;
 
             if (file.exists()) {
-                history = mapper.readValue(
+                map = mapper.readValue(
                         file,
                         mapper.getTypeFactory()
-                              .constructCollectionType(List.class, GameResult.class)
+                                .constructMapType(
+                                        LinkedHashMap.class,
+                                        Long.class,
+                                        Integer.class
+                                )
                 );
             } else {
-                history = new ArrayList<>();
+                map = new LinkedHashMap<>();
             }
 
-            history.add(new GameResult(gold));
-            mapper.writeValue(file, history);
+            map.put(System.currentTimeMillis(), gold);
+            mapper.writeValue(file, map);
 
         } catch (Exception e) {
             e.printStackTrace();

@@ -13,7 +13,8 @@ public class HudUtils {
             Label monster,
             Label qLabel,
             Label eLabel,
-            Label naLabel
+            Label naLabel,
+            Label portalLabel
     ) {
         hp.setText("HP: " + state.player.hp);
         gold.setText("Gold: " + state.player.gold);
@@ -42,6 +43,12 @@ public class HudUtils {
                 naCd == 0 ? "NA: Ready"
                         : "NA: " + (naCd / 1000) + "s"
         );
-
+        if (state.monsters.stream().noneMatch(m -> m.alive)) {
+            portalLabel.setText("Portal: Unlock at (" +
+                    state.portalX + "," +
+                    state.portalY + ")");
+        } else {
+            portalLabel.setText("Portal: Locked");
+        }
     }
 }

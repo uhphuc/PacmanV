@@ -12,9 +12,9 @@ public class GameResult {
 
     public GameResult() {}
 
-    public GameResult(int gold) {
+    public GameResult(int gold, long time) {
         this.gold = gold;
-        this.time = System.currentTimeMillis();
+        this.time = time;
     }
 
     @JsonIgnore

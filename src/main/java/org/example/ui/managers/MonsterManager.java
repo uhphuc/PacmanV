@@ -29,11 +29,30 @@ public class MonsterManager {
         long now = System.currentTimeMillis();
 
         for (Monster m : state.monsters) {
-            if (!m.alive || now < m.lastMoveAt) continue;
-            if (now < m.lastMoveAt) continue;
+            if (!m.alive) continue;
+
+            // ✅ DAMAGE CHECK 
             int dx = Math.abs(state.player.x - m.x);
             int dy = Math.abs(state.player.y - m.y);
 
+            if (dx == 0 && dy == 0) {
+                if (!state.player.isShieldActive() &&
+                    now - state.player.lastHitAt > Player.HIT_COOLDOWN) {
+
+                    state.player.hp--;
+                    state.player.lastHitAt = now;
+                }
+
+                if (state.player.hp <= 0) {
+                    onPlayerDead.run();
+                    return;
+                }
+            }
+
+            // MOVE COOLDOWN
+            if (now < m.lastMoveAt) continue;
+
+            // CHASE PLAYER
             if (dx <= 4 && dy <= 4) {
                 var path = PathFinding.bfs(
                         state.map,
@@ -43,21 +62,12 @@ public class MonsterManager {
 
                 if (!path.isEmpty()) {
                     int[] next = path.get(0);
-
-                    if (next[0] == state.player.x && next[1] == state.player.y) {
-                        if (!state.player.shieldActive) {
-                            state.player.hp--;
-                        } 
-                        if (state.player.hp <= 0) {
-                            onPlayerDead.run();
-                            return;
-                        }
-                    } else {
-                        m.x = next[0];
-                        m.y = next[1];
-                    }
+                    m.x = next[0];
+                    m.y = next[1];
                 }
-            } else {
+            }
+            // IDLE MOVEMENT
+            else {
                 if (Math.random() < 0.05) {
                     m.idleMode = (m.idleMode == IdleMode.HORIZONTAL)
                             ? IdleMode.VERTICAL
@@ -68,8 +78,7 @@ public class MonsterManager {
                 int ny = m.y;
 
                 if (m.idleMode == IdleMode.HORIZONTAL) {
-                    int step = (m.idleDir == Direction.RIGHT) ? 1 : -1;
-                    nx += step;
+                    nx += (m.idleDir == Direction.RIGHT) ? 1 : -1;
 
                     if (Math.abs(nx - m.spawnX) > IDLE_RANGE ||
                         nx < 0 || nx >= Map.SIZE ||
@@ -78,11 +87,10 @@ public class MonsterManager {
                         m.idleDir = (m.idleDir == Direction.RIGHT)
                                 ? Direction.LEFT
                                 : Direction.RIGHT;
-                        return;
+                        continue;
                     }
                 } else {
-                    int step = (m.idleDir == Direction.DOWN) ? 1 : -1;
-                    ny += step;
+                    ny += (m.idleDir == Direction.DOWN) ? 1 : -1;
 
                     if (Math.abs(ny - m.spawnY) > IDLE_RANGE ||
                         ny < 0 || ny >= Map.SIZE ||
@@ -91,7 +99,7 @@ public class MonsterManager {
                         m.idleDir = (m.idleDir == Direction.DOWN)
                                 ? Direction.UP
                                 : Direction.DOWN;
-                        return;
+                        continue;
                     }
                 }
                 m.x = nx;
@@ -100,5 +108,6 @@ public class MonsterManager {
             m.lastMoveAt = now + 400;
         }
     }
+
 }
 

@@ -5,6 +5,7 @@
 <?import javafx.scene.effect.DropShadow?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.shape.Rectangle?>
+<?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView?>
 
 <VBox spacing="20"
       alignment="CENTER"
@@ -32,13 +33,48 @@
         <!-- Divider -->
         <Rectangle width="400" height="3" fill="#FFD700"/>
 
-        <Label text="Top Performers"
+        <Label text="History Matches"
                style="-fx-text-fill: #888888; -fx-font-size: 14px; -fx-font-style: italic;"/>
     </VBox>
 
+    <!-- Sort Buttons -->
+    <HBox spacing="0"
+        alignment="CENTER"
+        styleClass="toggle-container"
+        fx:id="sortToggleContainer">
+        
+        <Button text="Newest"
+                onAction="#sortNewest"
+                styleClass="toggle-button toggle-active"
+                fx:id="newestButton"/>
+        
+        <Button text="Highest"
+                onAction="#sortHighest"
+                styleClass="toggle-button"
+                fx:id="highestButton"/>
+    </HBox>
+   
+
     <!-- Score Cards Container -->
-    <VBox fx:id="cardsContainer" spacing="10" alignment="CENTER"
-          style="-fx-background-color: rgba(0,0,0,0.2); -fx-background-radius: 15; -fx-padding: 20; -fx-border-color: #333333; -fx-border-radius: 15; -fx-border-width: 2;"/>
+        <ScrollPane
+            fitToWidth="true"
+            prefHeight="350"
+            style="-fx-background: transparent; -fx-background-color: transparent;"
+            hbarPolicy="NEVER"
+            vbarPolicy="AS_NEEDED">
+
+        <content>
+            <VBox fx:id="cardsContainer"
+                spacing="10"
+                alignment="CENTER"
+                style="-fx-background-color: rgba(0,0,0,0.2);
+                        -fx-background-radius: 15;
+                        -fx-padding: 20;
+                        -fx-border-color: #333333;
+                        -fx-border-radius: 15;
+                        -fx-border-width: 2;"/>
+        </content>
+    </ScrollPane>
 
     <!-- Stats Bar -->
     <HBox spacing="25" alignment="CENTER"

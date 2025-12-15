@@ -12,7 +12,8 @@ public class Player {
     public boolean shieldActive = false;
     public long shieldStart = 0;
     public static final long SHIELD_DURATION = 3000; // 3s
-
+    public long lastHitAt = 0;
+    public static final long HIT_COOLDOWN = 500;
 
     public Player(int x, int y) {
         this.x = x;
@@ -26,5 +27,11 @@ public class Player {
     }
     public boolean canClick(){
         return System.currentTimeMillis() - lastClick >= 1500;
+    }
+    public boolean isShieldActive() {
+        if (shieldActive && System.currentTimeMillis() - shieldStart >= SHIELD_DURATION) {
+            shieldActive = false;
+        }
+        return shieldActive;
     }
 }

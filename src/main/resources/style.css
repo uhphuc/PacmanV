@@ -3,3 +3,56 @@
     -fx-font-size: 13px;
     -fx-font-weight: bold;
 }
+/* Container */
+.toggle-container {
+    -fx-background-color: #1a202c;
+    -fx-background-radius: 25;
+    -fx-padding: 5;
+    -fx-border-color: #2d3748;
+    -fx-border-width: 2;
+    -fx-border-radius: 25;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.1), 5, 0, 0, 2);
+}
+
+/* Nút chung */
+.toggle-button {
+    -fx-background-color: transparent;
+    -fx-text-fill: #a0aec0;
+    -fx-font-size: 14;
+    -fx-font-weight: bold;
+    -fx-pref-width: 145;
+    -fx-pref-height: 42;
+    -fx-cursor: hand;
+    -fx-padding: 10 20;
+    -fx-border-width: 0;
+    -fx-background-radius: 0;
+    -fx-transition: all 0.3s ease;
+}
+
+/* Nút đầu tiên */
+.toggle-button:first-child {
+    -fx-background-radius: 20 0 0 20;
+}
+
+/* Nút cuối cùng */
+.toggle-button:last-child {
+    -fx-background-radius: 0 20 20 0;
+}
+
+/* Trạng thái active */
+.toggle-active {
+    -fx-background-color: linear-gradient(to right, #4CAF50, #45a049);
+    -fx-text-fill: white;
+    -fx-effect: dropshadow(gaussian, rgba(76,175,80,0.4), 8, 0, 0, 2);
+}
+
+/* Hiệu ứng hover cho nút không active */
+.toggle-button:hover:not(.toggle-active) {
+    -fx-background-color: rgba(255, 255, 255, 0.05);
+    -fx-text-fill: #e2e8f0;
+}
+
+/* Hiệu ứng hover cho nút active */
+.toggle-button.toggle-active:hover {
+    -fx-background-color: linear-gradient(to right, #45a049, #3d8b40);
+}

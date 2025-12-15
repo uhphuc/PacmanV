@@ -10,6 +10,7 @@ import javafx.stage.Stage;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.LinkedHashMap;
 import java.util.List;
 
 import org.example.data.GameResult;
@@ -78,25 +79,30 @@ public class MenuController {
 
     private void loadHighScore() {
         try {
-            File file = new File("save/gold_history.json");
-            if (!file.exists()) {
-                highScoreLabel.setText("High Score: 0");
-                return;
-            }
+        File file = new File("save/gold_history.json");
+        if (!file.exists()) {
+            highScoreLabel.setText("High Score: 0");
+            return;
+        }
 
-            ObjectMapper mapper = new ObjectMapper();
-            List<GameResult> history = mapper.readValue(
-                    file,
-                    mapper.getTypeFactory()
-                            .constructCollectionType(List.class, GameResult.class)
-            );
+        ObjectMapper mapper = new ObjectMapper();
 
-            int maxGold = history.stream()
-                    .mapToInt(r -> r.gold)
-                    .max()
-                    .orElse(0);
+        LinkedHashMap<Long, Integer> map = mapper.readValue(
+                file,
+                mapper.getTypeFactory()
+                        .constructMapType(
+                                LinkedHashMap.class,
+                                Long.class,
+                                Integer.class
+                        )
+        );
 
-            highScoreLabel.setText("High Score: " + maxGold);
+        int maxGold = map.values().stream()
+                .mapToInt(Integer::intValue)
+                .max()
+                .orElse(0);
+
+        highScoreLabel.setText("High Score: " + maxGold);
 
         } catch (Exception e) {
             e.printStackTrace();
