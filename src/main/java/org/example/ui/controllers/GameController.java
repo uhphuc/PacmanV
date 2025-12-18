@@ -59,6 +59,7 @@ public class GameController {
 
         state = new GameState();
         state.map = MapGenerator.generate(state.level);
+        state.player = new Player(state.map.playerStartX, state.map.playerStartY);
 
         assets = new ImageAssets();
         assets.load();
@@ -104,7 +105,7 @@ public class GameController {
 
         state.player.x = state.map.playerStartX;
         state.player.y = state.map.playerStartY;
-        
+
         state.player.lastHitAt = 0;
         state.monsters.clear();
         MonsterManager.spawn(state);

@@ -42,11 +42,26 @@ public class MapGenerator {
         }
 
         // 4️⃣ player spawn
-        map.playerStartX = size / 2;
-        map.playerStartY = size / 2;
-        map.tiles[map.playerStartY][map.playerStartX] = TileType.EMPTY;
+        // 4️⃣ find best empty spot for player (most open space)
+        int bestX = 1, bestY = 1;
+        int bestScore = -1;
 
-        // 5️⃣ flood-fill check (đảm bảo đi được)
+        for (int y = 1; y < size - 1; y++) {
+            for (int x = 1; x < size - 1; x++) {
+                if (map.tiles[y][x] != TileType.EMPTY) continue;
+
+                int score = countEmptyAround(map, x, y);
+
+                if (score > bestScore) {
+                    bestScore = score;
+                    bestX = x;
+                    bestY = y;
+                }
+            }
+        }
+
+        map.playerStartX = bestX;
+        map.playerStartY = bestY;
         boolean[][] visited = new boolean[size][size];
         floodFill(map, visited, map.playerStartX, map.playerStartY);
 
@@ -84,4 +99,25 @@ public class MapGenerator {
         floodFill(map, visited, x, y + 1);
         floodFill(map, visited, x, y - 1);
     }
+    
+    private static int countEmptyAround(Map map, int x, int y) {
+        int count = 0;
+
+        for (int dy = -1; dy <= 1; dy++) {
+            for (int dx = -1; dx <= 1; dx++) {
+                if (dx == 0 && dy == 0) continue;
+
+                int nx = x + dx;
+                int ny = y + dy;
+
+                if (nx >= 0 && ny >= 0 &&
+                    nx < Map.SIZE && ny < Map.SIZE &&
+                    map.tiles[ny][nx] == TileType.EMPTY) {
+                    count++;
+                }
+            }
+        }
+        return count;
+    }
+
 }

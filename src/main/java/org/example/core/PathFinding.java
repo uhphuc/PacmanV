@@ -13,10 +13,10 @@ public class PathFinding {
             int startX, int startY,
             int targetX, int targetY
     ) {
-        boolean[][] visited = new boolean[Map.SIZE][Map.SIZE];
         int[][] prevX = new int[Map.SIZE][Map.SIZE];
         int[][] prevY = new int[Map.SIZE][Map.SIZE];
-
+        boolean[][] visited = new boolean[Map.SIZE][Map.SIZE];
+        
         Queue<int[]> q = new ArrayDeque<>();
         q.add(new int[]{startX, startY});
         visited[startY][startX] = true;
@@ -46,12 +46,11 @@ public class PathFinding {
             }
         }
 
-        // reconstruct path
         List<int[]> path = new ArrayList<>();
         int cx = targetX;
         int cy = targetY;
 
-        if (!visited[cy][cx]) return path; // no path
+        if (!visited[cy][cx]) return path;
 
         while (cx != startX || cy != startY) {
             path.add(0, new int[]{cx, cy});

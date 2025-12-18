@@ -50,7 +50,6 @@ public class ScoreController {
     @FXML
     public void initialize() {
         loadScores();
-        // Thiết lập trạng thái ban đầu cho các nút
         updateButtonStyles();
     }
 
@@ -58,7 +57,6 @@ public class ScoreController {
         try {
             File file = new File("save/gold_history.json");
             if (!file.exists()) {
-                // Nếu file không tồn tại, tạo thư mục và file mới
                 file.getParentFile().mkdirs();
                 scoreMap = new LinkedHashMap<>();
                 return;
@@ -78,7 +76,7 @@ public class ScoreController {
 
         } catch (Exception e) {
             e.printStackTrace();
-            scoreMap = new LinkedHashMap<>(); // Khởi tạo map rỗng nếu có lỗi
+            scoreMap = new LinkedHashMap<>(); 
         }
     }
 
@@ -86,8 +84,7 @@ public class ScoreController {
         cardsContainer.getChildren().clear();
 
         if (scoreMap == null || scoreMap.isEmpty()) {
-            // Hiển thị thông báo khi không có dữ liệu
-            Label noDataLabel = new Label("📊 No game history yet");
+            Label noDataLabel = new Label("No game history yet");
             noDataLabel.setStyle("-fx-text-fill: #a0aec0; -fx-font-size: 16px; -fx-font-weight: bold;");
             cardsContainer.getChildren().add(noDataLabel);
             return;
@@ -97,14 +94,11 @@ public class ScoreController {
                 new ArrayList<>(scoreMap.entrySet());
 
         if (currentSort == SortMode.NEWEST) {
-            // Thời gian mới nhất lên trên
             entries.sort((a, b) -> Long.compare(b.getKey(), a.getKey()));
         } else {
-            // Điểm cao nhất lên trên
             entries.sort((a, b) -> {
                 int scoreCompare = Integer.compare(b.getValue(), a.getValue());
                 if (scoreCompare == 0) {
-                    // Nếu điểm bằng nhau, sắp xếp theo thời gian mới nhất
                     return Long.compare(b.getKey(), a.getKey());
                 }
                 return scoreCompare;
@@ -118,7 +112,6 @@ public class ScoreController {
             var e = entries.get(i);
             long time = e.getKey();
             int gold = e.getValue();
-
             cardsContainer.getChildren().add(
                     createScoreCard(time, gold, i + 1)
             );

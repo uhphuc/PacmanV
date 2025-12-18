@@ -5,8 +5,8 @@ public class Map {
 
     public TileType[][] tiles = new TileType[SIZE][SIZE];
 
-    public int playerStartX = 1;
-    public int playerStartY = 1;
+    public int playerStartX;
+    public int playerStartY;
 
     public Map() {
         // init tile thành EMPTY mặc định

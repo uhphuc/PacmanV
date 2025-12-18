@@ -3,7 +3,7 @@ package org.example.core;
 import java.util.ArrayList;
 
 public class GameState {
-    public Player player = new Player(1,1);
+    public Player player;
     public ArrayList<Monster> monsters = new ArrayList<>();
     public ArrayList<SkillEffect> effects = new ArrayList<>();
     public Map map;

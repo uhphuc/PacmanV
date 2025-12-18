@@ -22,7 +22,7 @@
 
     <!-- Header với hiệu ứng -->
     <VBox alignment="CENTER" spacing="10">
-        <Label text="PacmanV" textFill="linear-gradient(to right, #FFD700, #FFA500)">
+        <Label text="ROBOVerse" textFill="linear-gradient(to right, #FFD700, #FFA500)">
             <font>
                 <Font name="Impact" size="64"/>
             </font>

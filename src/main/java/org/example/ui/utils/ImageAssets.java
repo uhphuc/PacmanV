@@ -32,7 +32,7 @@ public class ImageAssets {
         rock = loadImg("/images/sprites/tiles/blue_planet.png");
         border = loadImg("/images/sprites/tiles/planets.png");
         background = loadImg("/images/sprites/tiles/background.png");
-        portal = loadImg("/images/sprites/tiles/portal.png");
+        portal = loadImg("/images/sprites/tiles/blackhole1.gif");
 
         shield = loadImg("/images/sprites/skills/shield.png");
         normal_attack = loadImg("/images/sprites/skills/na.png");
