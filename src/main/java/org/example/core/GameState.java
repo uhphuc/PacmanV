@@ -3,9 +3,10 @@ package org.example.core;
 import java.util.ArrayList;
 
 public class GameState {
-    public Player player;
     public ArrayList<Monster> monsters = new ArrayList<>();
     public ArrayList<SkillEffect> effects = new ArrayList<>();
+    
+    public Player player;
     public Map map;
     public int level = 1;
     public static final int MAP_VIEW_SIZE = 10;

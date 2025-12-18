@@ -16,7 +16,6 @@ public class MapGenerator {
             }
         }
 
-        
         for (int i = 0; i < size; i++) {
             map.tiles[0][i] = TileType.BORDER;
             map.tiles[size - 1][i] = TileType.BORDER;
@@ -24,7 +23,7 @@ public class MapGenerator {
             map.tiles[i][size - 1] = TileType.BORDER;
         }
 
-        // 3️⃣ wall clusters
+        // wall clusters
         int clusterCount = 10 + level * 2;
         for (int i = 0; i < clusterCount; i++) {
             int cx = rand.nextInt(size - 2) + 1;
@@ -41,8 +40,8 @@ public class MapGenerator {
             }
         }
 
-        // 4️⃣ player spawn
-        // 4️⃣ find best empty spot for player (most open space)
+        // player spawn
+        // find best empty spot for player (most open space)
         int bestX = 1, bestY = 1;
         int bestScore = -1;
 
@@ -62,6 +61,7 @@ public class MapGenerator {
 
         map.playerStartX = bestX;
         map.playerStartY = bestY;
+
         boolean[][] visited = new boolean[size][size];
         floodFill(map, visited, map.playerStartX, map.playerStartY);
 
@@ -73,7 +73,7 @@ public class MapGenerator {
             }
         }
 
-        // 6️⃣ spawn gold
+        // spawn gold
         int goldCount = 20 + level * 3;
         for (int i = 0; i < goldCount; i++) {
             int x, y;
@@ -87,19 +87,19 @@ public class MapGenerator {
 
         return map;
     }
+
     private static void floodFill(Map map, boolean[][] visited, int x, int y) {
         if (x < 0 || y < 0 || x >= Map.SIZE || y >= Map.SIZE) return;
         if (visited[y][x]) return;
         if (map.tiles[y][x] == TileType.WALL) return;
 
         visited[y][x] = true;
-
         floodFill(map, visited, x + 1, y);
         floodFill(map, visited, x - 1, y);
         floodFill(map, visited, x, y + 1);
         floodFill(map, visited, x, y - 1);
     }
-    
+
     private static int countEmptyAround(Map map, int x, int y) {
         int count = 0;
 

@@ -11,9 +11,6 @@ import javafx.stage.Stage;
 import java.io.File;
 import java.io.IOException;
 import java.util.LinkedHashMap;
-import java.util.List;
-
-import org.example.data.GameResult;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 

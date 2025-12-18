@@ -11,13 +11,9 @@ public class SkillManager {
             m.lastMoveAt = System.currentTimeMillis() + 3000;
         }
         state.effects.add(
-            new SkillEffect(
-                state.player.x,
-                state.player.y,
-                3000,
-                EffectType.FREEZE
-            )
-        );
+            new SkillEffect( state.player.x, state.player.y,
+                3000, EffectType.FREEZE
+            ));
 
         state.player.lastQ = System.currentTimeMillis();
         System.out.println("Freeze monsters!");

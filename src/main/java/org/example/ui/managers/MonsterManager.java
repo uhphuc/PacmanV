@@ -31,7 +31,7 @@ public class MonsterManager {
         for (Monster m : state.monsters) {
             if (!m.alive) continue;
 
-            // ✅ DAMAGE CHECK 
+            // ✅ DAMAGE CHECK
             int dx = Math.abs(state.player.x - m.x);
             int dy = Math.abs(state.player.y - m.y);
 

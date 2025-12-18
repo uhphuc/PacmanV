@@ -16,9 +16,10 @@ public class PathFinding {
         int[][] prevX = new int[Map.SIZE][Map.SIZE];
         int[][] prevY = new int[Map.SIZE][Map.SIZE];
         boolean[][] visited = new boolean[Map.SIZE][Map.SIZE];
-        
+
         Queue<int[]> q = new ArrayDeque<>();
         q.add(new int[]{startX, startY});
+        
         visited[startY][startX] = true;
 
         while (!q.isEmpty()) {
